@@ -6,13 +6,23 @@ gameResult hasWon(vector<vector<caseContent>> &board) {
 
 }
 
-int playMove(int moveIndex) {
+bool isMoveValid(int column, vector<vector<caseContent>> &board)
+{
+    return board[0][column] == EMPTY;
+}
+
+int playMove(int moveIndex, vector<vector<caseContent>> &board) {
     int playerIndex = (moveIndex % 2) + 1;
     int column = -1;
-    do {
-        cout << "Player " << playerIndex << " turn: ";
-        cin >> column;
-    } while (column < 1 || column > 7);
+    do{
+        do {
+            cout << "Player " << playerIndex << " turn: ";
+            cin >> column;
+        } while (column < 1 || column > 7);
+
+
+    } while (isMoveValid(column, board));
+
 
     return column;
 }
@@ -20,10 +30,10 @@ int playMove(int moveIndex) {
 int playGame(std::vector<int> tableSize, bool isAIPlaying) {
     //Define our table
     vector<vector<caseContent>> board(tableSize[0], vector<caseContent>(tableSize[1], EMPTY));
-    int moveIndex;
+    int moveIndex = 0;
     //Game loop
     while (hasWon(board) == NOT_FINISHED) {
-        playMove(moveIndex);
+        playMove(moveIndex, board);
         ++moveIndex;
     }
 }
