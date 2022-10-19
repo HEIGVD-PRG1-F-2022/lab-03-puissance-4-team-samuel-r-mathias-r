@@ -4,18 +4,20 @@
  * Created : 10.18.22
  */
 
+#include "display.h"
+#include "game.h"
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-#include "game.h"
 
 using namespace std;
+
 
 void changeAIModeMenu(settings &settings) {
     int choice;
     do {
-        system("cls");
+        clearScreen();
         cout << "AI mode :" << endl
              << "1. Smart" << endl
              << "2. Random" << endl
@@ -36,7 +38,6 @@ void changeAIModeMenu(settings &settings) {
 
 void changeBoardSizeMenu() {
     int choice;
-
 }
 
 void changeColorsMenu() {
@@ -46,7 +47,7 @@ void changeColorsMenu() {
 void changeSettings(settings &settings) {
     int choice;
     do {
-        system("cls");
+        clearScreen();
         cout << "What settings would you like to change?" << endl
              << "1. AI mode" << endl
              << "2. Board size" << endl
@@ -58,16 +59,16 @@ void changeSettings(settings &settings) {
     } while (choice > 4 || choice < 1);
 
     switch (choice) {
-        case 1: //AI mode
+        case 1://AI mode
             changeAIModeMenu(settings);
             break;
-        case 2: //Board size
+        case 2://Board size
             changeBoardSizeMenu();
             break;
-        case 3: //Colors
+        case 3://Colors
             changeColorsMenu();
             break;
-        case 4: //Exit
+        case 4://Exit
             return;
         default:
             throw invalid_argument("This case shouldn't happen!");
@@ -98,7 +99,7 @@ void gameMenu(settings &settings) {
             case 4:
                 isQuitting = true;
                 break;
-            default :
+            default:
                 cout << "Invalid choice" << endl;
         }
     }

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "display.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings) {
     while (hasWon(board) == NOT_FINISHED) {
         playMove(moveIndex, board);
         ++moveIndex;
+		clearScreen();
+		displayTable(board);
     }
 
     return 0;
