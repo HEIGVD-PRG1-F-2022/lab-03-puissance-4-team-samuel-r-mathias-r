@@ -33,4 +33,6 @@ int playGame(std::vector<int> tableSize, bool isAIPlaying) {
         playMove(moveIndex, board);
         ++moveIndex;
     }
+
+    return 0;
 }
