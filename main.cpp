@@ -7,11 +7,12 @@
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 #include "game.h"
 
 using namespace std;
 
-void changeAIModeMenu(){
+void changeAIModeMenu(settings &settings) {
     int choice;
     do {
         system("cls");
@@ -23,24 +24,26 @@ void changeAIModeMenu(){
         if (choice > 3 || choice < 1) cout << "Please enter a valid input!";
     } while (choice > 3 || choice < 1);
     switch (choice) {
-        case 1: //SetAIModeTo(0); break;
-        case 2: //SetAIModeTo(1); break;
-        case 3: return;
+        case 1:
+        case 2:
+            settings.AIMode = choice;
+        case 3:
+            return;
         default:
-            throw invalid_argument ("This case shouldn't happen!");
+            throw invalid_argument("This case shouldn't happen!");
     }
 }
 
-void changeBoardSizeMenu(){
+void changeBoardSizeMenu() {
     int choice;
 
 }
 
-void changeColorsMenu(){
+void changeColorsMenu() {
     int choice;
 }
 
-void changeSettings() {
+void changeSettings(settings &settings) {
     int choice;
     do {
         system("cls");
@@ -54,7 +57,7 @@ void changeSettings() {
 
     switch (choice) {
         case 1: //AI mode
-            changeAIModeMenu();
+            changeAIModeMenu(settings);
             break;
         case 2: //Board size
             changeBoardSizeMenu();
@@ -65,29 +68,29 @@ void changeSettings() {
         case 4: //Exit
             return;
         default:
-            throw invalid_argument ("This case shouldn't happen!");
+            throw invalid_argument("This case shouldn't happen!");
     }
 }
 
-void gameMenu() {
+void gameMenu(settings &settings) {
     bool isQuitting = false;
-    while(!isQuitting){
+    while (!isQuitting) {
         cout << "Welcome to *Connect Four*!" << endl
              << "1. Player vs AI" << endl
              << "2. Player vs Player" << endl
-             << "3. Settings" << endl
+             << "3. settings" << endl
              << "4. Exit" << endl;
         int choice;
         cin >> choice;
         switch (choice) {
             case 1:
-                playGame(vector<int>(6,7), false);
+                playGame({6, 7}, false, settings);
                 break;
             case 2:
-                playGame(vector<int>(6,7), true);
+                playGame({6, 7}, true, settings);
                 break;
             case 3:
-                changeSettings();
+                changeSettings(settings);
                 break;
             case 4:
                 isQuitting = true;
@@ -99,6 +102,7 @@ void gameMenu() {
 }
 
 int main() {
-    gameMenu();
+    settings settings;
+    gameMenu(settings);
     return EXIT_SUCCESS;
 }

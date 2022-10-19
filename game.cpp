@@ -20,11 +20,10 @@ int playMove(int moveIndex, vector<vector<caseContent>> &board) {
         } while (column < 1 || column > 7);
     } while (isMoveValid(column, board));
 
-
     return column;
 }
 
-int playGame(std::vector<int> tableSize, bool isAIPlaying) {
+int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings) {
     //Define our table
     vector<vector<caseContent>> board(tableSize[0], vector<caseContent>(tableSize[1], EMPTY));
     int moveIndex = 0;
