@@ -6,21 +6,18 @@ gameResult hasWon(vector<vector<caseContent>> &board) {
 
 }
 
-bool isMoveValid(int column, vector<vector<caseContent>> &board)
-{
+bool isMoveValid(int column, vector<vector<caseContent>> &board) {
     return board[0][column] == EMPTY;
 }
 
 int playMove(int moveIndex, vector<vector<caseContent>> &board) {
     int playerIndex = (moveIndex % 2) + 1;
     int column = -1;
-    do{
+    do {
         do {
             cout << "Player " << playerIndex << " turn: ";
             cin >> column;
         } while (column < 1 || column > 7);
-
-
     } while (isMoveValid(column, board));
 
 

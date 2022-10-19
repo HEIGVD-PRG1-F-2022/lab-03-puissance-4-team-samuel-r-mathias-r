@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+
 using namespace std;
 enum gameResult {
     NOT_FINISHED, DRAW, PLAYER1, PLAYER2
@@ -11,4 +12,5 @@ enum caseContent {
 };
 
 gameResult hasWon(vector<vector<caseContent>> &board);
+
 int playGame(std::vector<int> tableSize, bool isAIPlaying);
