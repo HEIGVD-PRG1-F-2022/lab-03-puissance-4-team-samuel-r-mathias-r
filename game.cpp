@@ -3,7 +3,7 @@
 using namespace std;
 
 gameResult hasWon(vector<vector<caseContent>> &board) {
-
+ return NOT_FINISHED;
 }
 
 bool isMoveValid(int column, vector<vector<caseContent>> &board) {

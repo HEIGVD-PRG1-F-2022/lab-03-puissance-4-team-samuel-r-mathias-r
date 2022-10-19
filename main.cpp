@@ -50,7 +50,9 @@ void changeSettings(settings &settings) {
         cout << "What settings would you like to change?" << endl
              << "1. AI mode" << endl
              << "2. Board size" << endl
-             << "3. Colors" << endl;
+             << "3. Colors" << endl
+             << "4. Exit" << endl
+             << "Your choice: ";
         cin >> choice;
         if (choice > 4 || choice < 1) cout << "Please enter a valid input!";
     } while (choice > 4 || choice < 1);
@@ -78,8 +80,9 @@ void gameMenu(settings &settings) {
         cout << "Welcome to *Connect Four*!" << endl
              << "1. Player vs AI" << endl
              << "2. Player vs Player" << endl
-             << "3. settings" << endl
-             << "4. Exit" << endl;
+             << "3. Settings" << endl
+             << "4. Exit" << endl
+             << "Your choice: ";
         int choice;
         cin >> choice;
         switch (choice) {
