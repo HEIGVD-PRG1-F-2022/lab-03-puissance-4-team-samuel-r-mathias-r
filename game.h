@@ -1,12 +1,10 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 struct settings{
     unsigned short AIMode = 0;
-    vector<unsigned short> colors = vector<unsigned short>(8, 12);
-    vector<unsigned short> boardSize = vector<unsigned short>(6, 7);
+    std::vector<unsigned short> colors = std::vector<unsigned short>{8, 12};
+    std::vector<unsigned short> boardSize = std::vector<unsigned short>{6, 7};
 };
 
 
@@ -20,7 +18,7 @@ enum caseContent {
     P2
 };
 
-gameResult hasWon(vector<vector<caseContent>> &board);
-bool isMoveValid(int column, vector<vector<caseContent>> &board);
-int playMove(int moveIndex, vector<vector<caseContent>> &board);
+gameResult hasWon(std::vector<std::vector<caseContent>> &board);
+bool isMoveValid(int column, std::vector<std::vector<caseContent>> &board);
+int playMove(int moveIndex, std::vector<std::vector<caseContent>> &board);
 int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings);
