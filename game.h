@@ -24,7 +24,7 @@ enum caseContent {
 #endif
 
 
-gameResult hasWon(std::vector<std::vector<caseContent>> &board);
+gameResult hasWon(const std::vector<std::vector<caseContent>> &board, const std::vector<int> lastPlayedCell);
 bool isMoveValid(int column, std::vector<std::vector<caseContent>> &board);
-void playMove(int moveIndex, std::vector<std::vector<caseContent>> &board);
+std::vector<int> playMove(int moveIndex, std::vector<std::vector<caseContent>> &board);
 int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings);

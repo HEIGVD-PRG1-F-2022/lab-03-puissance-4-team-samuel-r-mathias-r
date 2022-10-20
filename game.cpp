@@ -3,7 +3,8 @@
 
 using namespace std;
 
-gameResult hasWon(vector<vector<caseContent>> &board) {
+gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<int> lastPlayedCell) {
+    //to implement
     return NOT_FINISHED;
 }
 
@@ -11,7 +12,7 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
     return board[0][column] == EMPTY;
 }
 
-void playMove(int moveIndex, vector<vector<caseContent>> &board) {
+vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
     int playerIndex = (moveIndex % 2) + 1;
     int column;
     do {
@@ -25,22 +26,24 @@ void playMove(int moveIndex, vector<vector<caseContent>> &board) {
         caseContent &cell = board[board.size() - i - 1][column - 1];
         if (cell == EMPTY) {
             cell = playerIndex == 1 ? P1 : P2;
-            break;
+            return {(int) board.size() - i - 1, column - 1};
         }
     }
+    return {};//todo: refactor
 }
 
 int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings) {
     //Define our table
     vector<vector<caseContent>> board(tableSize[0], vector<caseContent>(tableSize[1], EMPTY));
     int moveIndex = 0;
-    //Game loop
-    while (hasWon(board) == NOT_FINISHED) {
-        playMove(moveIndex, board);
-        ++moveIndex;
+    vector<int> lastPlayedCell;
+    do {
+        //Game loop
         clearScreen();
         displayBoard(board);
-    }
+        lastPlayedCell = playMove(moveIndex, board);
+        ++moveIndex;
+    } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
 
     return 0;
 }
