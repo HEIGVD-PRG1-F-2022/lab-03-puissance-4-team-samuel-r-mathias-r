@@ -6,13 +6,11 @@
 
 #include "display.h"
 #include "game.h"
-#include <iomanip>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
 using namespace std;
-
 
 void changeAIModeMenu(settings &settings) {
     int choice;

@@ -2,10 +2,10 @@
 
 using namespace std;
 
-void displayTable(const std::vector<std::vector<caseContent>> &table) {
-    for (int line = 0; line < table.size(); line++) {
-        for (int col = 0; col < table[0].size(); col++) {
-            cout << "|" << (table[line][col] == EMPTY ? "X" : "");
+void displayBoard(const std::vector<std::vector<caseContent>> &board) {
+    for (int line = 0; line < board.size(); line++) {
+        for (int col = 0; col < board[0].size(); col++) {
+            cout << "|" << (board[line][col] == EMPTY ? " " : (board[line][col] == P1 ? "X" : "O"));
         }
         cout << "|" << endl;
     }
