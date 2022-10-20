@@ -1,4 +1,10 @@
 #include "display.h"
+//Code taken from https://stackoverflow.com/a/15481700
+#ifdef _WIN32
+#define CLEARCMD "cls"
+#else //In any other OS
+#define CLEARCMD "clear"
+#endif
 
 using namespace std;
 
@@ -12,9 +18,5 @@ void displayBoard(const std::vector<std::vector<caseContent>> &board) {
 }
 
 void clearScreen() {
-#ifdef _WIN32
-    system("cls");
-#else
-    system("clear");
-#endif
+    system(CLEARCMD);
 }
