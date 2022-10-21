@@ -1,4 +1,6 @@
 #include "display.h"
+#include "iomanip"
+#include "string"
 //Code taken from https://stackoverflow.com/a/15481700
 #ifdef _WIN32
 #define CLEARCMD "cls"
@@ -9,13 +11,16 @@
 using namespace std;
 
 void displayBoard(const std::vector<std::vector<caseContent>> &board) {
-    cout << " ";
+    //cout << " ";
     for (int i = 1; i <= board[0].size(); i++) {
-        cout << " " << i << " " << (board[0].size() == i ? "" : " ");
+        cout << setw(3) << i;
+        cout << " ";
     }
     cout << " " << endl;
     for (int j = 0; j < board[0].size(); j++) {
-        cout << "  \u25BC ";
+        //cout << "  \u25BC ";
+        cout << setw(3) << "v";
+        cout << " ";
     }
     cout << endl
          << endl;

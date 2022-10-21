@@ -16,7 +16,7 @@ void changeAIModeMenu(settings &settings) {
     int choice;
     do {
         clearScreen();
-        cout << "AI mode :" << endl
+        cout << "AI mode:" << endl
              << "1. Smart" << endl
              << "2. Random" << endl
              << "3. Back" << endl;
@@ -34,11 +34,25 @@ void changeAIModeMenu(settings &settings) {
     }
 }
 
-void changeBoardSizeMenu() {
+void changeBoardSizeMenu(settings &settings) {
     int choice;
+    do{
+        clearScreen();
+        cout << "Board size (height):" << endl
+             << "Your choice: " << endl;
+        cin >> choice;
+    } while(choice > 80 || choice < 3);
+    settings.boardSize[0] = choice;
+    do{
+        clearScreen();
+        cout << "Board size (width):" << endl
+             << "Your choice: " << endl;
+        cin >> choice;
+    } while(choice > 80 || choice < 3);
+    settings.boardSize[1] = choice;
 }
 
-void changeColorsMenu() {
+void changeColorsMenu(settings settings) {
     int choice;
 }
 
@@ -61,10 +75,10 @@ void changeSettings(settings &settings) {
             changeAIModeMenu(settings);
             break;
         case 2://Board size
-            changeBoardSizeMenu();
+            changeBoardSizeMenu(settings);
             break;
         case 3://Colors
-            changeColorsMenu();
+            changeColorsMenu(settings);
             break;
         case 4://Exit
             return;
@@ -86,10 +100,10 @@ void gameMenu(settings &settings) {
         cin >> choice;
         switch (choice) {
             case 1:
-                playGame({6, 7}, false, settings);
+                playGame(false, settings);
                 break;
             case 2:
-                playGame({6, 7}, true, settings);
+                playGame(true, settings);
                 break;
             case 3:
                 changeSettings(settings);

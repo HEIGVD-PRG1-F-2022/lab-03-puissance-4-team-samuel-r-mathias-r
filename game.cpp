@@ -1,5 +1,6 @@
 #include "game.h"
 #include "display.h"
+#include "limits"
 
 using namespace std;
 
@@ -19,7 +20,9 @@ vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
         do {
             cout << "Player " << playerIndex << " turn: ";
             cin >> column;
-        } while (column < 1 || column > 7);
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        } while (column < 1 || column - 1 > board[0].size());
     } while (!isMoveValid(column, board));
 
     for (int i = 0; i < board.size(); i++) {
@@ -32,9 +35,9 @@ vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
     return {};//todo: refactor
 }
 
-int playGame(std::vector<int> tableSize, bool isAIPlaying, settings settings) {
+int playGame(bool isAIPlaying, settings settings) {
     //Define our table
-    vector<vector<caseContent>> board(tableSize[0], vector<caseContent>(tableSize[1], EMPTY));
+    vector<vector<caseContent>> board(settings.boardSize[0], vector<caseContent>(settings.boardSize[1], EMPTY));
     int moveIndex = 0;
     vector<int> lastPlayedCell;
     do {
