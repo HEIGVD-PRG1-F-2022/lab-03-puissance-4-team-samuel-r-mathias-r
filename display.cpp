@@ -11,7 +11,6 @@
 using namespace std;
 
 void displayBoard(const std::vector<std::vector<caseContent>> &board) {
-    //cout << " ";
     for (int i = 1; i <= board[0].size(); i++) {
         cout << setw(3) << i;
         cout << " ";
