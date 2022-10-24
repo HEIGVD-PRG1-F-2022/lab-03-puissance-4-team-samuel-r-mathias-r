@@ -6,10 +6,10 @@
 
 #include "display.h"
 #include "game.h"
+#include "limits"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-#include "limits"
 
 using namespace std;
 
@@ -37,19 +37,19 @@ void changeAIModeMenu(settings &settings) {
 
 void changeBoardSizeMenu(settings &settings) {
     int choice;
-    do{
+    do {
         clearScreen();
         cout << "Board size (height):" << endl
              << "Your choice: " << endl;
         cin >> choice;
-    } while(choice > 80 || choice < 3);
+    } while (choice > 80 || choice < 3);
     settings.boardSize[0] = choice;
-    do{
+    do {
         clearScreen();
         cout << "Board size (width):" << endl
              << "Your choice: " << endl;
         cin >> choice;
-    } while(choice > 80 || choice < 3);
+    } while (choice > 80 || choice < 3);
     settings.boardSize[1] = choice;
 }
 
@@ -118,13 +118,22 @@ void gameMenu(settings &settings) {
                 cout << "Invalid choice" << endl;
         }
         clearScreen();
-        switch(whoWon){
-            case 1: cout << "It's a draw!" << endl; break;
-            case 2: cout << "Player 1 won! GG!" << endl; break;
-            case 3: cout << "Player 2 won! GG!" << endl; break;
-            default: cout << "ERROR!" << endl; break;
+        switch (whoWon) {
+            case 1:
+                cout << "It's a draw!" << endl;
+                break;
+            case 2:
+                cout << "Player 1 won! GG!" << endl;
+                break;
+            case 3:
+                cout << "Player 2 won! GG!" << endl;
+                break;
+            default:
+                cout << "ERROR!" << endl;
+                break;
         }
-        cout << "Would you like to return to menu?" << endl << "Your choice: ";
+        cout << "Would you like to return to menu?" << endl
+             << "Your choice: ";
         string newChoice;
         cin >> newChoice;
         cin.clear();
