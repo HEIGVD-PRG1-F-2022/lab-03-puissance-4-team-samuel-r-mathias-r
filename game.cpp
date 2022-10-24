@@ -18,8 +18,8 @@ playAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &board
             return smartAIMove(lastPlayedCell, board, settings);//Smart
         case 2:
             return randomAIMove(board);//Random
-            break;
     }
+    return 1;//Shouldn't happen... /shrug
 }
 
 int
@@ -34,9 +34,12 @@ smartAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &boar
                     testCoinCoordinates = vector<int>{j, i};
                 }
             }
-            if (hasWon(board, testCoinCoordinates))
+            if (hasWon(board, testCoinCoordinates) && isMoveValid(testCoinCoordinates[1], board)) {
+                return testCoinCoordinates[1];
+            }
+            else
             {
-
+                return lastPlayedCell[1];
             }
         }
     } else {
@@ -144,8 +147,10 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
 }
 
 vector<int>
-playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, vector<int> &lastPlayedCell,
+playMove(vector<vector<caseContent>> &board, settings &settings, vector<int> &lastPlayedCell,
          bool isAIPLaying) {
+    static int moveIndex = -1;
+    moveIndex++;
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
@@ -177,12 +182,10 @@ playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, 
 gameResult playGame(bool isAIPlaying, settings &settings) {
     //Define our table
     vector<vector<caseContent>> board(settings.boardSize[0], vector<caseContent>(settings.boardSize[1], EMPTY));
-    int moveIndex = 0;
     vector<int> lastPlayedCell;
     do {
         //Game loop
-        lastPlayedCell = playMove(moveIndex, board, settings, lastPlayedCell, isAIPlaying);
-        ++moveIndex;
+        lastPlayedCell = playMove(board, settings, lastPlayedCell, isAIPlaying);
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
     clearScreen();
     return hasWon(board, lastPlayedCell);
