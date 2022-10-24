@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include "limits"
 
 using namespace std;
 
@@ -89,6 +90,8 @@ void changeSettings(settings &settings) {
 
 void gameMenu(settings &settings) {
     bool isQuitting = false;
+    gameResult whoWon = DRAW;
+    clearScreen();
     while (!isQuitting) {
         cout << "Welcome to *Connect Four*!" << endl
              << "1. Player vs AI" << endl
@@ -100,10 +103,10 @@ void gameMenu(settings &settings) {
         cin >> choice;
         switch (choice) {
             case 1:
-                cout << playGame(false, settings) << endl;
+                whoWon = playGame(false, settings);
                 break;
             case 2:
-                playGame(true, settings);
+                whoWon = playGame(true, settings);
                 break;
             case 3:
                 changeSettings(settings);
@@ -114,6 +117,18 @@ void gameMenu(settings &settings) {
             default:
                 cout << "Invalid choice" << endl;
         }
+        clearScreen();
+        switch(whoWon){
+            case 1: cout << "It's a draw!" << endl; break;
+            case 2: cout << "Player 1 won! GG!" << endl; break;
+            case 3: cout << "Player 2 won! GG!" << endl; break;
+            default: cout << "ERROR!" << endl; break;
+        }
+        cout << "Would you like to return to menu?" << endl << "Your choice: ";
+        string newChoice;
+        cin >> newChoice;
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
