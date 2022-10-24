@@ -21,7 +21,7 @@ void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSe
 
         string escapedColoredString = "\033[33;" + to_string(color) + "m";
 
-        escapedColoredString += "⬤";//big filled circle (UTF8 code is 11044)
+        escapedColoredString += "\u2B24";//big filled circle (UTF8 code is 2B24)
 
         escapedColoredString += "\033[0m";
         cout << escapedColoredString << " ";//colored coins needs a space after them to have a proper display
@@ -40,7 +40,11 @@ void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<uns
 
     //Display a line of 2 chars bottom triangles (actually this is an association of 2 triangles of 1 char width)
     for (int j = 0; j < board[0].size(); j++) {
+#ifdef _WIN32
+        cout << "  \/ ";
+#else
         cout << "  ◥◤ ";
+#endif
     }
     cout << endl
          << endl;
