@@ -15,15 +15,14 @@ using namespace std;
 //Display a coin with a given color
 void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSettings) {
     if (caseContent == EMPTY) {
-        cout << "⚫";
+        cout << "\u25EF";//empty circle
     } else {
         int color = colorsSettings[caseContent == P1 ? 0 : 1] + 30;//colors from 31 to 36
 
         string escapedColoredString = "\033[33;" + to_string(color) + "m";
-
         escapedColoredString += "\u2B24";//big filled circle (UTF8 code is 2B24)
-
         escapedColoredString += "\033[0m";
+
         cout << escapedColoredString << " ";//colored coins needs a space after them to have a proper display
     }
 }
