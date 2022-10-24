@@ -1,12 +1,21 @@
 # Connect Four
 ## A [Connect Four game](https://en.wikipedia.org/wiki/Connect_Four) developed in C++ in the terminal for the PRG1 class.
 
-todo: image of the game
+## Visual overview
+
+### The main menu
+![menu.png](imgs/menu.png)
+
+### The settings menu
+![settings.png](imgs/settings.png)
+
+### The game
+![game.png](imgs/game.png)
 
 ## Authors
 - Samuel Roland
 - Mathias Renoult
-- 
+
 ## How to use
 1. Clone the repos: `git clone https://github.com/HEIGVD-PRG1-F-2022/lab-03-puissance-4-team-samuel-r-mathias-r.git`
 1. Compile the project: `g++ *.cpp -o ./main`

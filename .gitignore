@@ -1,3 +1,5 @@
 cmake-build-debug
-# Files without a dot (binary files)
-*[^\.]
+# Binary files
+main
+display
+game
