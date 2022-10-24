@@ -10,7 +10,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
-
+#ifdef _WIN32
+#include "windows.h"
+#endif
 using namespace std;
 
 void changeAIModeMenu(settings &settings) {
@@ -170,6 +172,10 @@ void gameMenu(settings &settings) {
 }
 
 int main() {
+    #ifdef _WIN32
+        system(("chcp 65001 "s + to_string(CP_UTF8)).c_str());
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
     settings settings;
     gameMenu(settings);
     cout << "Bye bye !" << endl;

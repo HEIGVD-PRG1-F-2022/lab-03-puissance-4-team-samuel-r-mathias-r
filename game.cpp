@@ -4,6 +4,27 @@
 
 using namespace std;
 
+int
+playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
+    switch (settings.AIMode) {
+        case 1:
+            smartAIMove(lastPlayedCell, board, settings);//Smart
+        case 2:
+            break;//Random
+    }
+}
+
+int
+smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
+    static vector<int> lastAIMove = (vector<int>) {-1, -1};
+    if (lastAIMove != (vector<int>) {-1, -1}) {
+
+    } else {
+        return lastPlayedCell[1];
+    }
+    return {};
+}
+
 gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<int> &lastPlayedCell) {
     /*
      * Directions :
@@ -102,22 +123,26 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
     return board[0][column] == EMPTY;
 }
 
-vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings) {
+vector<int>
+playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, vector<int> &lastPlayedCell) {
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
-    do {
+    if (playerIndex == 2) {
         do {
-            displayBoard(board, settings.colors);//display the final board before displaying the winner
-            cout << "Player " << playerIndex << " turn: ";
-            cin >> column;
-            column--;
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            clearScreen();
-        } while (column < 0 || column > board[0].size());
-    } while (!isMoveValid(column, board));
-
+            do {
+                displayBoard(board, settings.colors);//display the final board before displaying the winner
+                cout << "Player " << playerIndex << " turn: ";
+                cin >> column;
+                column--;
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                clearScreen();
+            } while (column < 0 || column > board[0].size());
+        } while (!isMoveValid(column, board));
+    } else {
+        column = smartAIMove(lastPlayedCell, board, settings);
+    }
     for (int i = 0; i < board.size(); i++) {
         caseContent &cell = board[board.size() - i - 1][column];
         if (cell == EMPTY) {
@@ -135,9 +160,7 @@ gameResult playGame(bool isAIPlaying, settings &settings) {
     vector<int> lastPlayedCell;
     do {
         //Game loop
-        //clearScreen();
-        //displayBoard(board, settings.colors);
-        lastPlayedCell = playMove(moveIndex, board, settings);
+        lastPlayedCell = playMove(moveIndex, board, settings, lastPlayedCell);
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
     clearScreen();

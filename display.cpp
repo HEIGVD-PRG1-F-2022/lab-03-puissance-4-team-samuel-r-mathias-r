@@ -5,6 +5,7 @@
 #include <vector>
 //Code taken from https://stackoverflow.com/a/15481700
 #ifdef _WIN32
+#include "windows.h"
 #define CLEARCMD "cls"
 #else//In any other OS
 #define CLEARCMD "clear"
@@ -15,7 +16,7 @@ using namespace std;
 //Display a coin with a given color
 void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSettings) {
     if (caseContent == EMPTY) {
-        cout << "⚫";
+        cout << "\u26AB";
     } else {
         int color = colorsSettings[caseContent == P1 ? 0 : 1] + 30;//colors from 31 to 36
 
@@ -41,7 +42,7 @@ void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<uns
     //Display a line of 2 chars bottom triangles (actually this is an association of 2 triangles of 1 char width)
     for (int j = 0; j < board[0].size(); j++) {
 #ifdef _WIN32
-        cout << "  \/ ";
+        cout << "  \\/ ";
 #else
         cout << "  ◥◤ ";
 #endif
