@@ -94,8 +94,6 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
     if (NE + SW >= 3 || S >= 3 || E + W >= 3 || NW + SE >= 3) {
         return gameResult(checkedPlayer + 1);
     }
-
-    cout << "hasWon() is working properly!" << endl;
     return NOT_FINISHED;
 }
 
@@ -103,17 +101,19 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
     return board[0][column] == EMPTY;
 }
 
-vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
+vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings) {
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
     do {
         do {
+            displayBoard(board, settings.colors);//display the final board before displaying the winner
             cout << "Player " << playerIndex << " turn: ";
             cin >> column;
             column--;
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            clearScreen();
         } while (column < 0 || column > board[0].size());
     } while (!isMoveValid(column, board));
 
@@ -127,21 +127,18 @@ vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
     return {};//todo: refactor
 }
 
-gameResult playGame(bool isAIPlaying, settings settings) {
+gameResult playGame(bool isAIPlaying, settings &settings) {
     //Define our table
     vector<vector<caseContent>> board(settings.boardSize[0], vector<caseContent>(settings.boardSize[1], EMPTY));
     int moveIndex = 0;
     vector<int> lastPlayedCell;
     do {
         //Game loop
-        clearScreen();
-        displayBoard(board, settings.colors);
-        lastPlayedCell = playMove(moveIndex, board);
-        if (lastPlayedCell == vector<int>{}) {
-        }
+        //clearScreen();
+        //displayBoard(board, settings.colors);
+        lastPlayedCell = playMove(moveIndex, board, settings);
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
     clearScreen();
-    displayBoard(board, settings.colors);//display the final board before displaying the winner
     return hasWon(board, lastPlayedCell);
 }

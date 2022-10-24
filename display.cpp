@@ -29,6 +29,9 @@ void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSe
 }
 
 void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<unsigned short> colorsSettings) {
+    //Erase the screen
+    clearScreen();
+
     //Display the first line of case numbers (numbers from 0 to 99 supported)
     for (int i = 1; i <= board[0].size(); i++) {
         cout << setw(4) << i << " ";
