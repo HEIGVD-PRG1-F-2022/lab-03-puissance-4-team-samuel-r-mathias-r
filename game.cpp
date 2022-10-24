@@ -55,14 +55,12 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
                     cout << "ERROR" << endl;
             }
             if ((lastPlayedCell[0] + x < board.size() &&
-                    lastPlayedCell[1] + y < board[0].size() &&
-                    lastPlayedCell[0] + x >= 0 &&
-                    lastPlayedCell[1] + y >= 0) &&
-                   board[lastPlayedCell[0] + x][lastPlayedCell[1] + y] == checkedPlayer) {
+                 lastPlayedCell[1] + y < board[0].size() &&
+                 lastPlayedCell[0] + x >= 0 &&
+                 lastPlayedCell[1] + y >= 0) &&
+                board[lastPlayedCell[0] + x][lastPlayedCell[1] + y] == checkedPlayer) {
                 score++;
-            }
-            else
-            {
+            } else {
                 break;
             }
         }
@@ -106,7 +104,7 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
 }
 
 vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
-    if (moveIndex == board.size() * board[0].size()) return {}; //Draw
+    if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
     do {
@@ -139,8 +137,7 @@ gameResult playGame(bool isAIPlaying, settings settings) {
         clearScreen();
         displayBoard(board, settings.colors);
         lastPlayedCell = playMove(moveIndex, board);
-        if(lastPlayedCell == vector<int>{}){
-
+        if (lastPlayedCell == vector<int>{}) {
         }
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
