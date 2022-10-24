@@ -34,7 +34,10 @@ smartAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &boar
                     testCoinCoordinates = vector<int>{j, i};
                 }
             }
-            if (hasWon(board, testCoinCoordinates));
+            if (hasWon(board, testCoinCoordinates))
+            {
+
+            }
         }
     } else {
         return lastPlayedCell[1];

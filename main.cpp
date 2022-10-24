@@ -149,10 +149,10 @@ void gameMenu(settings &settings) {
         cin >> choice;
         switch (choice) {
             case 1:
-                whoWon = playGame(false, settings);
+                whoWon = playGame(true, settings);
                 break;
             case 2:
-                whoWon = playGame(true, settings);
+                whoWon = playGame(false, settings);
                 break;
             case 3:
                 changeSettings(settings);
