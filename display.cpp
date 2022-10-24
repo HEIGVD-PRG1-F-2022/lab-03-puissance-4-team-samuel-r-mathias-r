@@ -29,6 +29,7 @@ void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSe
     }
 }
 
+//Display the board with colored coins and line numbers
 void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<unsigned short> colorsSettings) {
     //Erase the screen
     clearScreen();
@@ -62,6 +63,7 @@ void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<uns
     cout << endl;
 }
 
+//Clear the screen
 void clearScreen() {
     system(CLEARCMD);
 }

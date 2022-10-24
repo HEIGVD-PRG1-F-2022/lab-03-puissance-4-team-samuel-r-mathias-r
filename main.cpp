@@ -15,6 +15,7 @@
 #endif
 using namespace std;
 
+//Menu to change the AI mode (random or smart)
 void changeAIModeMenu(settings &settings) {
     int choice;
     do {
@@ -38,6 +39,7 @@ void changeAIModeMenu(settings &settings) {
     }
 }
 
+//Menu to change size of the board
 void changeBoardSizeMenu(settings &settings) {
     int height, width;
     const int MAX_BOARD_SIZE = 80;
@@ -53,6 +55,7 @@ void changeBoardSizeMenu(settings &settings) {
     settings.boardSize[1] = width;
 }
 
+//Menu to change the colors of the coins
 void changeColorsMenu(settings &settings) {
     int color1, color2;
     const int MAX_COLOR_INDEX = 6;
@@ -76,6 +79,7 @@ void changeColorsMenu(settings &settings) {
     settings.colors[1] = color2;
 }
 
+//Menu for the different settings
 void changeSettings(settings &settings) {
     int choice;
     do {
@@ -107,6 +111,7 @@ void changeSettings(settings &settings) {
     }
 }
 
+//Show the rules of the game
 void showHelp() {
     clearScreen();
     string help = "Rules of Connect Four"
@@ -120,6 +125,7 @@ void showHelp() {
     cin >> quit;
 }
 
+//Run several rounds of the game
 void gameMenu(settings &settings) {
     bool isQuitting = false;
     gameResult whoWon = NOT_FINISHED;
@@ -190,10 +196,10 @@ void gameMenu(settings &settings) {
 }
 
 int main() {
-    #ifdef _WIN32
-        system(("chcp 65001 "s + to_string(CP_UTF8)).c_str());
-        SetConsoleOutputCP(CP_UTF8);
-    #endif
+#ifdef _WIN32
+    system(("chcp 65001 "s + to_string(CP_UTF8)).c_str());
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     settings settings;
     gameMenu(settings);
     cout << "Bye bye !" << endl;
