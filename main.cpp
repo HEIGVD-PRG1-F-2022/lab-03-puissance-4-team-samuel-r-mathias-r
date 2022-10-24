@@ -105,6 +105,19 @@ void changeSettings(settings &settings) {
     }
 }
 
+void showHelp() {
+    clearScreen();
+    string help = "Rules of Connect Four"
+                  "\nThe first player that can align 4 coins vertically, horizonzally, or diagonally win the game ! "
+                  "\nIf you are alone, you can play against the computer, with a smart AI or a random AI..."
+                  "\nThat's it, you know how to play now :)";
+    cout << help << endl;
+    cout << endl
+         << "Press a key and enter to leave ";
+    string quit;
+    cin >> quit;
+}
+
 void gameMenu(settings &settings) {
     bool isQuitting = false;
     gameResult whoWon = NOT_FINISHED;
@@ -121,7 +134,8 @@ void gameMenu(settings &settings) {
         cout << "1. Player vs AI" << endl
              << "2. Player vs Player" << endl
              << "3. Settings" << endl
-             << "4. Exit" << endl
+             << "4. Show help" << endl
+             << "5. Exit" << endl
              << "Your choice: ";
         int choice;
         cin >> choice;
@@ -137,6 +151,10 @@ void gameMenu(settings &settings) {
                 clearScreen();
                 break;
             case 4:
+                showHelp();
+                clearScreen();
+                break;
+            case 5:
                 isQuitting = true;
                 break;
             default:
