@@ -3,6 +3,7 @@
 #include "limits"
 
 using namespace std;
+
 int randomAIMove(const vector<vector<caseContent>> &board) {
     srand(time(0));
     int rd = rand();
@@ -140,11 +141,12 @@ bool isMoveValid(int column, vector<vector<caseContent>> &board) {
 }
 
 vector<int>
-playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, vector<int> &lastPlayedCell) {
+playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, vector<int> &lastPlayedCell,
+         bool isAIPLaying) {
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
-    if (playerIndex == 2) {
+    if (playerIndex == 1 || !isAIPLaying) {
         do {
             do {
                 displayBoard(board, settings.colors);//display the final board before displaying the winner
@@ -176,7 +178,7 @@ gameResult playGame(bool isAIPlaying, settings &settings) {
     vector<int> lastPlayedCell;
     do {
         //Game loop
-        lastPlayedCell = playMove(moveIndex, board, settings, lastPlayedCell);
+        lastPlayedCell = playMove(moveIndex, board, settings, lastPlayedCell, isAIPlaying);
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
     clearScreen();

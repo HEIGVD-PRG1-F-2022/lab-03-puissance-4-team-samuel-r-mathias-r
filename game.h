@@ -29,11 +29,13 @@ gameResult hasWon(const std::vector<std::vector<caseContent>> &board, const std:
 
 bool isMoveValid(int column, std::vector<std::vector<caseContent>> &board);
 
-std::vector<int> playMove(int moveIndex, std::vector<std::vector<caseContent>> &board, settings &settings);
+std::vector<int>
+playMove(int moveIndex, std::vector<std::vector<caseContent>> &board, settings &settings, bool isAIPlaying);
 
 gameResult playGame(bool isAIPlaying, settings &settings);
 
 int randomAIMove(const std::vector<std::vector<caseContent>> &board);
+
 int
 smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings);
 
