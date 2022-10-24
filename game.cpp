@@ -15,13 +15,17 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
      *   South-West(--) | South-East (-+)
      *               South(-0)
      */
+
+    //Initializing all the cardinal variables to 0. North doesn't need to be used because the coins come from above
     unsigned short NW = 0, NE = 0, W = 0, E = 0, SE = 0, SW = 0, S = 0;
-    int x = 1;
-    int y = 1;
-    int score = 0;
+    //Initializing the offsets and the score to 0. The score is a temporary variable that is each time transfered to the cardinals
+    int x, y, score = 0;
+    //Get the content of the last played cell. We need to know which player has played...
     caseContent checkedPlayer = board[lastPlayedCell[0]][lastPlayedCell[1]];
+    //Loop that iterates for each cardinals, starting from NE and going to NW clockwise
     for (int i = 0; i < 7; i++) {
         for (int depth = 1; depth <= 5; depth++) {
+            //Sets the correct offset math to x and y
             switch (i) {
                 case 0:
                     x = -depth;
@@ -52,8 +56,9 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
                     y = -depth;
                     break;
                 default:
-                    cout << "ERROR" << endl;
+                    cout << "ERROR" << endl; //shouldn't happen
             }
+            //first checks if we are IN the bounds of the board, then check the content of an offset cell from the center
             if ((lastPlayedCell[0] + x < board.size() &&
                  lastPlayedCell[1] + y < board[0].size() &&
                  lastPlayedCell[0] + x >= 0 &&
@@ -61,40 +66,36 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
                 board[lastPlayedCell[0] + x][lastPlayedCell[1] + y] == checkedPlayer) {
                 score++;
             } else {
-                break;
+                break;//If a cell is not the same as the center one, the "chain" of coins is cut, thus we leave the loop
             }
         }
+        //Add the score of the current cardinal to one of the 4 cardinals.
         switch (i) {
             case 0:
-                NE = score;
+            case 4:
+                NE += score;
                 break;
             case 1:
-                E = score;
+            case 5:
+                E += score;
                 break;
             case 2:
+            case 6:
                 SE = score;
                 break;
             case 3:
                 S = score;
-                break;
-            case 4:
-                SW = score;
-                break;
-            case 5:
-                W = score;
-                break;
-            case 6:
-                NW = score;
                 break;
             default:
                 cout << "ERROR" << endl;
         }
         score = 0;
     }
-    if (NE + SW >= 3 || S >= 3 || E + W >= 3 || NW + SE >= 3) {
-        return gameResult(checkedPlayer + 1);
+    //Checks if there's a chain of coins of at least 4 of length
+    if (NE >= 3 || S >= 3 || E >= 3 || SE >= 3) {
+        return gameResult(checkedPlayer + 1); //returns the player who won
     }
-    return NOT_FINISHED;
+    return NOT_FINISHED;//nobody won
 }
 
 bool isMoveValid(int column, vector<vector<caseContent>> &board) {
