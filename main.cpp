@@ -38,20 +38,40 @@ void changeAIModeMenu(settings &settings) {
 
 void changeBoardSizeMenu(settings &settings) {
     int height, width;
+    const int MAX_BOARD_SIZE = 80;
+    const int MIN_BOARD_SIZE = 3;
     do {
         clearScreen();
         cout << "New board height (3-80): ";
         cin >> height;
-        cout << endl;
         cout << "New board width (3-80): ";
         cin >> width;
-    } while (height > 80 || height < 3 || width > 80 || width < 3);
+    } while (height > MAX_BOARD_SIZE || height < MIN_BOARD_SIZE || width > MAX_BOARD_SIZE || width < MIN_BOARD_SIZE);
     settings.boardSize[0] = height;
-    settings.boardSize[1] = height;
+    settings.boardSize[1] = width;
 }
 
-void changeColorsMenu(settings settings) {
-    int choice;
+void changeColorsMenu(settings &settings) {
+    int color1, color2;
+    const int MAX_COLOR_INDEX = 6;
+    const int MIN_COLOR_INDEX = 1;
+
+    do {
+        clearScreen();
+        cout << "Change the colors of the coins. Available colors:"
+             << "\n1: Red"
+             << "\n2: Green"
+             << "\n3: Yellow"
+             << "\n4: Blue"
+             << "\n5: Magenta"
+             << "\n6: Cyan\n";
+        cout << "New coin color for player 1: ";
+        cin >> color1;
+        cout << "New coin color for player 2: ";
+        cin >> color2;
+    } while (color1 > MAX_COLOR_INDEX || color1 < MIN_COLOR_INDEX || color2 > MAX_COLOR_INDEX || color2 < MIN_COLOR_INDEX);
+    settings.colors[0] = color1;
+    settings.colors[1] = color2;
 }
 
 void changeSettings(settings &settings) {
