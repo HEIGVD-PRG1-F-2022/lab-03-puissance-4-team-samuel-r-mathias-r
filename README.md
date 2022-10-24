@@ -12,6 +12,8 @@
 ### The game
 ![game.png](imgs/game.png)
 
+This board display works perfectly only in VSCode under Linux (and Mac probably). We didn't find a way to fix it on Windows and in other terminals.
+
 ## Authors
 - Samuel Roland
 - Mathias Renoult
