@@ -4,10 +4,19 @@
 
 using namespace std;
 
+bool isMoveValid(int column, const vector<vector<caseContent>> &board) {
+    return board[0][column] == EMPTY;
+}
+
 int randomAIMove(const vector<vector<caseContent>> &board) {
-    srand(time(0));
-    int rd = rand();
-    rd %= (board.size() - 1);//find a random number between 0 and (board width - 1)
+    int rd;
+
+    //find a random number between 0 and the board width (excluded)
+    do {
+        srand(time(0));
+        rd = rand();
+        rd %= (board.size());
+    } while (!isMoveValid(rd, board));
     return rd;
 }
 
@@ -137,10 +146,6 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
         return gameResult(checkedPlayer + 1); //returns the player who won
     }
     return NOT_FINISHED;//nobody won
-}
-
-bool isMoveValid(int column, vector<vector<caseContent>> &board) {
-    return board[0][column] == EMPTY;
 }
 
 vector<int>
