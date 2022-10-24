@@ -3,21 +3,26 @@
 #include "limits"
 
 using namespace std;
+int randomAIMove(const vector<vector<caseContent>> &board) {
+    srand(time(0));
+    int rd = rand();
+    rd %= (board.size() - 1);//find a random number between 0 and (board width - 1)
+    return rd;
+}
 
-int
-playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
+int playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
     switch (settings.AIMode) {
         case 1:
-            smartAIMove(lastPlayedCell, board, settings);//Smart
+            return smartAIMove(lastPlayedCell, board, settings);//Smart
         case 2:
-            break;//Random
+            return randomAIMove(board);//Random
+            break;
     }
 }
 
-int
-smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
-    static vector<int> lastAIMove = (vector<int>) {-1, -1};
-    if (lastAIMove != (vector<int>) {-1, -1}) {
+int smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
+    static vector<int> lastAIMove = (vector<int>){-1, -1};
+    if (lastAIMove != (vector<int>){-1, -1}) {
 
     } else {
         return lastPlayedCell[1];
@@ -77,7 +82,7 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
                     y = -depth;
                     break;
                 default:
-                    cout << "ERROR" << endl; //shouldn't happen
+                    cout << "ERROR" << endl;//shouldn't happen
             }
             //first checks if we are IN the bounds of the board, then check the content of an offset cell from the center
             if ((lastPlayedCell[0] + x < board.size() &&
@@ -114,7 +119,7 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
     }
     //Checks if there's a chain of coins of at least 4 of length
     if (NE >= 3 || S >= 3 || E >= 3 || SE >= 3) {
-        return gameResult(checkedPlayer + 1); //returns the player who won
+        return gameResult(checkedPlayer + 1);//returns the player who won
     }
     return NOT_FINISHED;//nobody won
 }
@@ -128,7 +133,7 @@ playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, 
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
-    if (playerIndex == 2) {
+    if (playerIndex == 1) {
         do {
             do {
                 displayBoard(board, settings.colors);//display the final board before displaying the winner
