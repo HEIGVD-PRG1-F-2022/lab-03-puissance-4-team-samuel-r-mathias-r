@@ -100,7 +100,7 @@ void gameMenu(settings &settings) {
         cin >> choice;
         switch (choice) {
             case 1:
-                playGame(false, settings);
+                cout << playGame(false, settings) << endl;
                 break;
             case 2:
                 playGame(true, settings);

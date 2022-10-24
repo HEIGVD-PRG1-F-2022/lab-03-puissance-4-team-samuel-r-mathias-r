@@ -16,80 +16,83 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
      *           South(-0)
      */
     unsigned short NW = 0, NE = 0, W = 0, E = 0, SE = 0, SW = 0, S = 0;
-    int x = 1;
-    int y = 1;
+    int x = 0;
+    int y = 0;
     int score = 0;
     caseContent checkedPlayer = board[lastPlayedCell[0]][lastPlayedCell[1]];
     for (int i = 0; i < 7; i++) {
+        for (int depth = 1; depth < 3; depth++) {
+            while ((lastPlayedCell[0] + x < board.size() &&
+                    lastPlayedCell[1] + y < board[0].size() &&
+                    lastPlayedCell[0] + x >= 0 &&
+                    lastPlayedCell[1] + y >= 0) &&
+                   board[lastPlayedCell[0] + x][lastPlayedCell[1] + y] == checkedPlayer) {
+                switch (i) {
+                    case 0:
+                        x = depth;
+                        y = depth;
+                        break;
+                    case 1:
+                        x = 0;
+                        y = depth;
+                        break;
+                    case 2:
+                        x = depth * -1;
+                        y = depth * -1;
+                        break;
+                    case 3:
+                        x = depth * -1;
+                        y = 0;
+                        break;
+                    case 4:
+                        x = depth * -1;
+                        y = depth * -1;
+                        break;
+                    case 5:
+                        x = 0;
+                        y = depth * -1;
+                        break;
+                    case 6:
+                        x = depth;
+                        y = depth;
+                        break;
+                    default:
+                        cout << "ERROR" << endl;
+                }
+                depth++;
+                score++;
+            }
+        }
         switch (i) {
             case 0:
-                x = i;
-                y = i;
+                NE = score;
                 break;
             case 1:
-                x = 0;
-                y = i;
+                E = score;
                 break;
             case 2:
-                x = i * -1;
-                y = i * -1;
+                SE = score;
                 break;
             case 3:
-                x = i * -1;
-                y = 0;
+                S = score;
                 break;
             case 4:
-                x = i * -1;
-                y = i * -1;
+                SW = score;
                 break;
             case 5:
-                x = 0;
-                y = i * -1;
+                W = score;
                 break;
             case 6:
-                x = i;
-                y = i;
+                NW = score;
                 break;
             default:
                 cout << "ERROR" << endl;
         }
-        if ((lastPlayedCell[0] + x >= board.size() ||
-             lastPlayedCell[1] + y >= board[0].size() ||
-             lastPlayedCell[0] + x < 0 ||
-             lastPlayedCell[1] + y < 0) &&
-            board[lastPlayedCell[0] + x][lastPlayedCell[1] + y] == checkedPlayer) {
-            score++;
-        } else {
-            switch (i) {
-                case 0:
-                    NE = score;
-                    break;
-                case 1:
-                    E = score;
-                    break;
-                case 2:
-                    SE = score;
-                    break;
-                case 3:
-                    S = score;
-                    break;
-                case 4:
-                    SW = score;
-                    break;
-                case 5:
-                    W = score;
-                    break;
-                case 6:
-                    NW = score;
-                    break;
-                default:
-                    cout << "ERROR" << endl;
-            }
-            score = 0;
-        }
+        score = 0;
     }
     if (NE + SW >= 3 || S >= 3 || E + W >= 3 || NW + SE >= 3) return gameResult(checkedPlayer + 1);
 
+    cout << "hasWon() is working properly!" << endl;
     return NOT_FINISHED;
 }
 
@@ -120,7 +123,7 @@ vector<int> playMove(int moveIndex, vector<vector<caseContent>> &board) {
     return {};//todo: refactor
 }
 
-int playGame(bool isAIPlaying, settings settings) {
+gameResult playGame(bool isAIPlaying, settings settings) {
     //Define our table
     vector<vector<caseContent>> board(settings.boardSize[0], vector<caseContent>(settings.boardSize[1], EMPTY));
     int moveIndex = 0;
@@ -133,5 +136,5 @@ int playGame(bool isAIPlaying, settings settings) {
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
 
-    return 0;
+    return hasWon(board, lastPlayedCell);
 }
