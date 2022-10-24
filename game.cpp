@@ -141,7 +141,7 @@ playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, 
             } while (column < 0 || column > board[0].size());
         } while (!isMoveValid(column, board));
     } else {
-        column = smartAIMove(lastPlayedCell, board, settings);
+        column = playAIMove(lastPlayedCell, board, settings);
     }
     for (int i = 0; i < board.size(); i++) {
         caseContent &cell = board[board.size() - i - 1][column];
