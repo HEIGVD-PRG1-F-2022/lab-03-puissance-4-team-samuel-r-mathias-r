@@ -6,6 +6,6 @@
 
 #endif
 
-void displayCoin(int color);
-void displayBoard(const std::vector<std::vector<caseContent>> &board);
+void displayCoin(const caseContent &caseContent, std::vector<unsigned short> colorsSettings);
+void displayBoard(const std::vector<std::vector<caseContent>> &board, std::vector<unsigned short> colorsSettings);
 void clearScreen();

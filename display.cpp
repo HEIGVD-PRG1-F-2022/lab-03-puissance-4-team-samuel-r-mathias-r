@@ -1,6 +1,8 @@
 #include "display.h"
+#include "game.h"
 #include "iomanip"
 #include "string"
+#include <vector>
 //Code taken from https://stackoverflow.com/a/15481700
 #ifdef _WIN32
 #define CLEARCMD "cls"
@@ -11,20 +13,22 @@
 using namespace std;
 
 //Display a coin with a given color
-void displayCoin(int color) {
-    if (color != 0) {
+void displayCoin(const caseContent &caseContent, vector<unsigned short> colorsSettings) {
+    if (caseContent == EMPTY) {
+        cout << "⚫";
+    } else {
+        int color = colorsSettings[caseContent == P1 ? 0 : 1] + 30;//colors from 31 to 36
+
         string escapedColoredString = "\033[33;" + to_string(color) + "m";
 
         escapedColoredString += "⬤";//big filled circle (UTF8 code is 11044)
 
         escapedColoredString += "\033[0m";
-        cout << escapedColoredString;
-    } else {
-        cout << "⚫";
+        cout << escapedColoredString << " ";//colored coins needs a space after them to have a proper display
     }
 }
 
-void displayBoard(const std::vector<std::vector<caseContent>> &board) {
+void displayBoard(const std::vector<std::vector<caseContent>> &board, vector<unsigned short> colorsSettings) {
     //Display the first line of case numbers (numbers from 0 to 99 supported)
     for (int i = 1; i <= board[0].size(); i++) {
         cout << setw(4) << i << " ";
@@ -42,12 +46,7 @@ void displayBoard(const std::vector<std::vector<caseContent>> &board) {
     for (int line = 0; line < board.size(); line++) {
         for (int col = 0; col < board[0].size(); col++) {
             cout << "| ";
-            if (board[line][col] == EMPTY) {
-                displayCoin(0);//display empty coin
-            } else {
-                displayCoin(board[line][col] == P1 ? 34 : 32);
-                cout << " ";//colored coins needs a space after them to have a proper display
-            }
+            displayCoin(board[line][col], colorsSettings);//display the coin (empty or filled)
             cout << " ";
         }
         cout << "|" << endl;
