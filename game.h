@@ -5,8 +5,8 @@
 
 struct settings {
     unsigned short AIMode = 0;
-    std::vector<unsigned short> colors = std::vector<unsigned short>{8, 12};
     std::vector<unsigned short> boardSize = std::vector<unsigned short>{6, 7};
+    std::vector<unsigned short> colors = std::vector<unsigned short>{2, 4};
 };
 
 enum gameResult {

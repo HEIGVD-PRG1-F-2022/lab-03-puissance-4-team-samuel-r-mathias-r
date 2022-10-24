@@ -131,7 +131,7 @@ gameResult playGame(bool isAIPlaying, settings settings) {
     do {
         //Game loop
         clearScreen();
-        displayBoard(board);
+        displayBoard(board, settings.colors);
         lastPlayedCell = playMove(moveIndex, board);
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
