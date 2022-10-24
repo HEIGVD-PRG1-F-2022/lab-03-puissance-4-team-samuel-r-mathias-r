@@ -10,7 +10,8 @@ int randomAIMove(const vector<vector<caseContent>> &board) {
     return rd;
 }
 
-int playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
+int
+playAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
     switch (settings.AIMode) {
         case 1:
             return smartAIMove(lastPlayedCell, board, settings);//Smart
@@ -20,10 +21,20 @@ int playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<c
     }
 }
 
-int smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings) {
-    static vector<int> lastAIMove = (vector<int>){-1, -1};
-    if (lastAIMove != (vector<int>){-1, -1}) {
-
+int
+smartAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
+    static vector<int> lastAIMove = (vector<int>) {-1, -1};
+    if (lastAIMove != (vector<int>) {-1, -1}) {
+        for (int i = 0; i < board[0].size(); ++i) {
+            vector<int> testCoinCoordinates;
+            for (int j = 0; j < board.size(); j++) {
+                caseContent &cell = board[board.size() - j - 1][i];
+                if (cell == EMPTY) {
+                    testCoinCoordinates = vector<int>{j, i};
+                }
+            }
+            if (hasWon(board, testCoinCoordinates));
+        }
     } else {
         return lastPlayedCell[1];
     }
@@ -82,7 +93,7 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
                     y = -depth;
                     break;
                 default:
-                    cout << "ERROR" << endl;//shouldn't happen
+                    cout << "ERROR" << endl; //shouldn't happen
             }
             //first checks if we are IN the bounds of the board, then check the content of an offset cell from the center
             if ((lastPlayedCell[0] + x < board.size() &&
@@ -119,7 +130,7 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
     }
     //Checks if there's a chain of coins of at least 4 of length
     if (NE >= 3 || S >= 3 || E >= 3 || SE >= 3) {
-        return gameResult(checkedPlayer + 1);//returns the player who won
+        return gameResult(checkedPlayer + 1); //returns the player who won
     }
     return NOT_FINISHED;//nobody won
 }
@@ -133,7 +144,7 @@ playMove(int moveIndex, vector<vector<caseContent>> &board, settings &settings, 
     if (moveIndex == board.size() * board[0].size()) return {};//Draw
     int playerIndex = (moveIndex % 2) + 1;
     int column;
-    if (playerIndex == 1) {
+    if (playerIndex == 2) {
         do {
             do {
                 displayBoard(board, settings.colors);//display the final board before displaying the winner

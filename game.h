@@ -31,7 +31,7 @@ bool isMoveValid(int column, std::vector<std::vector<caseContent>> &board);
 
 std::vector<int> playMove(int moveIndex, std::vector<std::vector<caseContent>> &board, settings &settings);
 
-gameResult playGame(bool isAIPlaying, settings &settings, std::vector<int> &lastPlayedCell);
+gameResult playGame(bool isAIPlaying, settings &settings);
 
 int randomAIMove(const std::vector<std::vector<caseContent>> &board);
 int
