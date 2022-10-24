@@ -142,5 +142,6 @@ gameResult playGame(bool isAIPlaying, settings settings) {
         ++moveIndex;
     } while (hasWon(board, lastPlayedCell) == NOT_FINISHED);
     clearScreen();
+    displayBoard(board, settings.colors);//display the final board before displaying the winner
     return hasWon(board, lastPlayedCell);
 }

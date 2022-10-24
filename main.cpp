@@ -21,6 +21,7 @@ void changeAIModeMenu(settings &settings) {
              << "1. Smart" << endl
              << "2. Random" << endl
              << "3. Back" << endl;
+        cout << "Your choice: ";
         cin >> choice;
         if (choice > 3 || choice < 1) cout << "Please enter a valid input!";
     } while (choice > 3 || choice < 1);
@@ -36,21 +37,17 @@ void changeAIModeMenu(settings &settings) {
 }
 
 void changeBoardSizeMenu(settings &settings) {
-    int choice;
+    int height, width;
     do {
         clearScreen();
-        cout << "Board size (height):" << endl
-             << "Your choice: " << endl;
-        cin >> choice;
-    } while (choice > 80 || choice < 3);
-    settings.boardSize[0] = choice;
-    do {
-        clearScreen();
-        cout << "Board size (width):" << endl
-             << "Your choice: " << endl;
-        cin >> choice;
-    } while (choice > 80 || choice < 3);
-    settings.boardSize[1] = choice;
+        cout << "New board height (3-80): ";
+        cin >> height;
+        cout << endl;
+        cout << "New board width (3-80): ";
+        cin >> width;
+    } while (height > 80 || height < 3 || width > 80 || width < 3);
+    settings.boardSize[0] = height;
+    settings.boardSize[1] = height;
 }
 
 void changeColorsMenu(settings settings) {
@@ -90,11 +87,18 @@ void changeSettings(settings &settings) {
 
 void gameMenu(settings &settings) {
     bool isQuitting = false;
-    gameResult whoWon = DRAW;
+    gameResult whoWon = NOT_FINISHED;
     clearScreen();
     while (!isQuitting) {
         cout << "Welcome to *Connect Four*!" << endl
-             << "1. Player vs AI" << endl
+             << "Current settings:"
+             << "\n  - Board size (width*height): " << settings.boardSize[1] << " * " << settings.boardSize[0]
+             << "\n  - Coin colors: " << settings.colors[0] << ", " << settings.colors[1]
+             << "\n  - AI Mode: " << (settings.AIMode == 0 ? "Smart" : "Random")
+             << endl
+             << endl;
+
+        cout << "1. Player vs AI" << endl
              << "2. Player vs Player" << endl
              << "3. Settings" << endl
              << "4. Exit" << endl
@@ -110,6 +114,7 @@ void gameMenu(settings &settings) {
                 break;
             case 3:
                 changeSettings(settings);
+                clearScreen();
                 break;
             case 4:
                 isQuitting = true;
@@ -117,32 +122,36 @@ void gameMenu(settings &settings) {
             default:
                 cout << "Invalid choice" << endl;
         }
-        clearScreen();
-        switch (whoWon) {
-            case 1:
-                cout << "It's a draw!" << endl;
-                break;
-            case 2:
-                cout << "Player 1 won! GG!" << endl;
-                break;
-            case 3:
-                cout << "Player 2 won! GG!" << endl;
-                break;
-            default:
-                cout << "ERROR!" << endl;
-                break;
+        // clearScreen();
+        if (whoWon != NOT_FINISHED) {
+            switch (whoWon) {
+                case DRAW:
+                    cout << "It's a draw!" << endl;
+                    break;
+                case PLAYER1:
+                case PLAYER2:
+                    cout << "Player " << (whoWon == PLAYER1 ? 1 : 2) << " won! GG!" << endl;
+                    break;
+                default:
+                    cout << "ERROR!" << endl;
+                    break;
+            }
+            cout << "Would you like continue and return to the menu? [y/n] " << endl;
+            string continueOrQuit;
+            cin >> continueOrQuit;
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            if (continueOrQuit == "n") {
+                return;
+            }
+            clearScreen();
         }
-        cout << "Would you like to return to menu?" << endl
-             << "Your choice: ";
-        string newChoice;
-        cin >> newChoice;
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
 int main() {
     settings settings;
     gameMenu(settings);
+    cout << "Bye bye !" << endl;
     return EXIT_SUCCESS;
 }
