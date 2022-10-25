@@ -76,8 +76,9 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
     for (int i = -1; i < 6; i++) {
         for (int depth = 1; depth <= 5; depth++) {
             //Sets the correct offset math to x and y
-            double sineFunctionResult = sin((double) i * (M_PI / 4.0));
-            double cosFunctionResult = cos((double) i * (M_PI / 4.0));
+            double sineFunctionResult = sin((double) i * (M_PI / 4.0)); //Get the raw cardinal direction of x
+            double cosFunctionResult = cos((double) i * (M_PI / 4.0)); //Get the raw cardinal direction of y
+            //Clamp to -1, 0 or 1 and multiply by the depth to get the exact offset wanted
             x = (sineFunctionResult > 0.1 ? 1 : sineFunctionResult < -0.1 ? -1 : 0) * depth;
             y = (cosFunctionResult > 0.1 ? 1 : cosFunctionResult < -0.1 ? -1 : 0) * depth;
 
