@@ -1,6 +1,7 @@
 #include "game.h"
 #include "display.h"
 #include "limits"
+#include "cmath"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ int randomAIMove(const vector<vector<caseContent>> &board) {
     return rd;
 }
 
-int playAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
+int playAIMove(vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
     switch (settings.AIMode) {
         case 1:
             return smartAIMove(lastPlayedCell, board, settings);//Smart
@@ -30,9 +31,9 @@ int playAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &b
     return 1;//Shouldn't happen... /shrug
 }
 
-int smartAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
-    static vector<int> lastAIMove = (vector<int>){-1, -1};
-    if (lastAIMove != (vector<int>){-1, -1}) {
+int smartAIMove(vector<int> &lastPlayedCell, vector<vector<caseContent>> &board, settings &settings) {
+    static vector<int> lastAIMove = (vector<int>) {-1, -1};
+    if (lastAIMove != (vector<int>) {-1, -1}) {
         for (int i = 0; i < board[0].size(); ++i) {
             vector<int> testCoinCoordinates;
             for (int j = 0; j < board.size(); j++) {
@@ -43,12 +44,12 @@ int smartAIMove(const vector<int> &lastPlayedCell, vector<vector<caseContent>> &
             }
             if (hasWon(board, testCoinCoordinates) && isMoveValid(testCoinCoordinates[1], board)) {
                 return testCoinCoordinates[1];
-            } else {
-                return lastPlayedCell[1];
             }
         }
-    } else {
+    } else if (isMoveValid(lastPlayedCell[1], board)) {
         return lastPlayedCell[1];
+    } else {
+        return randomAIMove(board);
     }
     return {};
 }
@@ -72,41 +73,14 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
     //Get the content of the last played cell. We need to know which player has played...
     caseContent checkedPlayer = board[lastPlayedCell[0]][lastPlayedCell[1]];
     //Loop that iterates for each cardinals, starting from NE and going to NW clockwise
-    for (int i = 0; i < 7; i++) {
+    for (int i = -1; i < 6; i++) {
         for (int depth = 1; depth <= 5; depth++) {
             //Sets the correct offset math to x and y
-            switch (i) {
-                case 0:
-                    x = -depth;
-                    y = depth;
-                    break;
-                case 1:
-                    x = 0;
-                    y = depth;
-                    break;
-                case 2:
-                    x = depth;
-                    y = depth;
-                    break;
-                case 3:
-                    x = depth;
-                    y = 0;
-                    break;
-                case 4:
-                    x = depth;
-                    y = -depth;
-                    break;
-                case 5:
-                    x = 0;
-                    y = -depth;
-                    break;
-                case 6:
-                    x = -depth;
-                    y = -depth;
-                    break;
-                default:
-                    cout << "ERROR" << endl;//shouldn't happen
-            }
+            double sineFunctionResult = sin((double) i * (M_PI / 4.0));
+            double cosFunctionResult = cos((double) i * (M_PI / 4.0));
+            x = (sineFunctionResult > 0.1 ? 1 : sineFunctionResult < -0.1 ? -1 : 0) * depth;
+            y = (cosFunctionResult > 0.1 ? 1 : cosFunctionResult < -0.1 ? -1 : 0) * depth;
+
             //first checks if we are IN the bounds of the board, then check the content of an offset cell from the center
             if ((lastPlayedCell[0] + x < board.size() &&
                  lastPlayedCell[1] + y < board[0].size() &&
@@ -119,7 +93,7 @@ gameResult hasWon(const vector<vector<caseContent>> &board, const std::vector<in
             }
         }
         //Add the score of the current cardinal to one of the 4 cardinals.
-        switch (i) {
+        switch (i + 1) {
             case 0:
             case 4:
                 NE += score;

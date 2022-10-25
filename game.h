@@ -37,7 +37,7 @@ gameResult playGame(bool isAIPlaying, settings &settings);
 int randomAIMove(const std::vector<std::vector<caseContent>> &board);
 
 int
-smartAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings);
+smartAIMove(std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings);
 
 int
-playAIMove(const std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings);
+playAIMove(std::vector<int> &lastPlayedCell, std::vector<std::vector<caseContent>> &board, settings &settings);
